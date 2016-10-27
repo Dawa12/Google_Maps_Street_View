@@ -1,0 +1,37 @@
+{
+  "name": "project2_maps_street_view",
+  "version": "1.0.0",
+  "description": "### Overview",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dawa12/Google_Maps_Street_View.git"
+  },
+  "author": "Dawa Sherpa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dawa12/Google_Maps_Street_View/issues"
+  },
+  "homepage": "https://github.com/Dawa12/Google_Maps_Street_View#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.2",
+    "eslint": "^3.8.1",
+    "express": "^4.14.0",
+    "method-override": "^2.3.6",
+    "mongodb": "^2.2.11",
+    "morgan": "^1.7.0",
+    "node-fetch": "^1.6.3",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1"
+  }
+}
