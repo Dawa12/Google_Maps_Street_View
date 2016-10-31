@@ -18,22 +18,19 @@ app.set('views', 'views');
 
 const mapRoute = require('./routes/map');
 
-app.use('/', dbService.getFavorite, mapRoute);
-
-// app.use('/', dbService.getFavorite, mapRoute, (req, res) => {
-//   res.render('/', {
-//     favorites: res.favorites || [],
-//   });
-// });
+// app.use('/', dbService.getFavorite, mapRoute);
+app.use('/', dbService.getFavorite, dbService.getShowFavorite, mapRoute);
 
 app.post('/favorites', dbService.saveFavorite, (req, res) => {
-  // console.log('saved favorite');
-  // console.log(res);
+  res.redirect('/');
+});
+
+app.post('/showfavorite', dbService.saveShowFavorite, (req,res) => {
+  console.log('show fav post route executed');
   res.redirect('/');
 });
 
 app.listen(PORT, () => console.log('listening on port', PORT));
-
 
 // favorites:
 //    [ { _id: 581387acc7a249909da02553,

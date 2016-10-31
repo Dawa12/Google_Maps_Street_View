@@ -1,0 +1,24 @@
+if (<% showFavorite %>) {
+  var fenway = {lat: <%= showFavorite.lat %>, lng: <%= showFavorite.lng %>};
+  <% console.log('fenway is: ', fenway) %>
+}
+
+function showFavorite(req, res, next) {
+  MongoClient.connect(dbConnection, (err, db) => {
+    if (err) return next(err);
+
+// console.log('showing req.body', req.body);
+console.log('still working');
+    db.collection('favorites')
+      .insert(req.body.showfavorite, (insertErr, result) => {
+        if (insertErr) return next(insertErr);
+
+        res.showFavorite = result;
+// console.log('inside saveFavorite function', result);
+        db.close();
+        return next();
+      });
+    return false;
+  });
+  return false;
+}

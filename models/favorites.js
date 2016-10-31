@@ -12,7 +12,6 @@ function getFavorite(req, res, next) {
     .sort({ collectionName: 1})
     .toArray((arrayError, data) => {
       if (arrayError) return next(arrayError);
-// console.log('data is: ', data);
       res.favorites = data;
       db.close();
       return next();
@@ -60,8 +59,48 @@ function deleteFavorite(req, res, next) {
   return false;
 }
 
+
+function saveShowFavorite(req, res, next) {
+  MongoClient.connect(dbConnection, (err, db) => {
+    if (err) return next(err);
+
+    db.collection('showfavorites')
+      .insert(req.body.favorite, (insertErr, result) => {
+        if (insertErr) return next(insertErr);
+          res.saved = result;
+          db.close();
+          return next();
+      });
+    return false;
+  });
+  return false;
+}
+
+function getShowFavorite(req, res, next) {
+  MongoClient.connect(dbConnection, (err, db) => {
+    if (err) return next(err);
+
+console.log('still working');
+
+    db.collection('showfavorites')
+    .find({})
+    .sort({ collectionName: 1})
+    .toArray((arrayError, data) => {
+      if (arrayError) return next(arrayError);
+      res.showFavorite = data;
+      db.close();
+      return next();
+    });
+    return false;
+  });
+  return false;
+}
+
+
 module.exports = {
   getFavorite,
   saveFavorite,
   // deleteFavorite,
+  saveShowFavorite,
+  getShowFavorite,
 };

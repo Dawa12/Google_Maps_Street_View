@@ -1,2 +1,168 @@
-var mapp = map_<%= i %>;
-<% console.log('map i is: ', mapp) %>
+// determining marker position
+let marker = new google.maps.Marker({
+position: fenway,
+map: map,
+// this makes the marker a draggable item
+draggable: true,
+title: "Drag me!",
+label: "🍳",
+});
+
+// adding event listener for the drag release readjutment of values
+google.maps.event.addListener(marker, 'dragend', function (event) {
+// changing values inside of form
+$lat.value = this.getPosition().lat();
+$lng.value = this.getPosition().lng();
+console.log('got new values for lat and long');
+});
+
+
+
+
+
+
+
+
+
+var myOptions = {
+  center: fenway,
+  zoom: 15,
+  mapTypeId: 'roadmap'
+}
+
+// determining marker position
+let marker = new google.maps.Marker({
+  position: fenway,
+  map: map,
+  // this makes the marker a draggable item
+  draggable: true,
+  title: "Drag me!",
+  label: "🍳",
+});
+
+google.maps.event.addListener(marker, 'dragend', function (event) {
+  // changing values inside of form
+
+
+
+
+
+
+              // Create a marker for each place.
+              markers.push(new google.maps.Marker({
+                map: map,
+                icon: icon,
+                title: place.name,
+                position: place.geometry.location
+  <%# console.log('place is ', place.name) %>
+  <%# console.log('place.geometry.location: ', place.geometry.location) %>
+              }));
+
+              if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+              } else {
+                bounds.extend(place.geometry.location);
+              }
+            });
+            map.fitBounds(bounds);
+          });
+        }
+
+        function geocodeAddress(geocoder, resultsMap) {
+          var address = document.getElementById('pac-input').value;
+          geocoder.geocode({'address': address}, function(results, status) {
+            if (status === 'OK') {
+              resultsMap.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location
+              });
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+        };
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;pan
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="Sydney, NSW">
+      <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('address').addEventListener('keyup', function(event) {
+          if (event.keyCode === 13) {
+            alert('clicked');
+            geocodeAddress(geocoder, map);
+          }
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi1R3t0sCpt0ImqxDLaFhw9oxBiB3PmrM&callback=initMap">
+    </script>
+  </body>
+</html>

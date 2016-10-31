@@ -7,10 +7,34 @@
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
+
+       /*body {
+         padding-left: 10px;
+       }*/
        #map, #pano {
          height: 500px;
-         width: 500px;
+         width: 35%;
+         float: left;
+         left: 10px;
+         top: 10px;
+         margin-bottom: 15px;
+         margin-left: 15px;
        }
+
+       .save_button {
+         margin-bottom: 75px;
+       }
+
+       .location {
+         height: 200px;
+         width: 200px;
+         float: left;
+       }
+
+       .display_favorites {
+         margin-top: 200px;
+       }
+
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
@@ -69,7 +93,7 @@
 
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
-    <div id="pano">pano div</div>
+    <div id="pano"></div>
 
     <script>
       // This example adds a search box to a map, using the Google Place Autocomplete
@@ -81,12 +105,35 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
       function initAutocomplete() {
-        var fenway = {lat: 42.345573, lng: -71.098326};
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('pac-input').addEventListener('keyup', function(event) {
+          if (event.keyCode === 13) {
+  <%# console.log('position is now') %>
+            geocodeAddress(geocoder, map);
+          }
+        });
+
+        var fenway = {lat: <%= lat %>, lng: <%= lng %>};
+        <% if (showFavorite) { %>
+          <% console.log('true') %>
+          <%# console.log('showFavorite is: ', showFavorite) %>
+
+          fenway = {lat: <%= showFavorite[0].lat %>, lng: <%= showFavorite[0].lng %>}
+
+        <% } else { %>
+          <% console.log('false') %>
+        <% } %>
+
+        <%# console.log('hi') %>
+        <%# console.log('showfav is', showFavorite) %>
+
         var myOptions = {
           center: fenway,
           zoom: 15,
           mapTypeId: 'roadmap'
         }
+
         var map = new google.maps.Map(document.getElementById('map'), myOptions);
         // var map2 = new google.maps.Map(document.getElementById('map2'), myOptions);
 
@@ -147,6 +194,8 @@
               icon: icon,
               title: place.name,
               position: place.geometry.location
+<%# console.log('place is ', place.name) %>
+<%# console.log('place.geometry.location: ', place.geometry.location) %>
             }));
 
             if (place.geometry.viewport) {
@@ -158,9 +207,74 @@
           });
           map.fitBounds(bounds);
         });
+
+
+        // credit to Taka for helping me place marker and detect marker position
+              // determining marker position
+        let marker = new google.maps.Marker({
+          position: fenway,
+          map: map,
+          // this makes the marker a draggable item
+          draggable: true,
+          title: "Drag me!",
+          label: "🍳",
+        });
+        // showing physical values to user inside of form
+        // const $lat = document.getElementsByClassName('lat')[0];
+        // const $lng = document.getElementsByClassName('lng')[0];
+        // $lat.value = uluru.lat;
+        // $lng.value = uluru.lng;
+
+        // adding event listener for the drag release readjutment of values
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+          // changing values inside of form
+          // $lat.value = this.getPosition().lat();
+          // $lng.value = this.getPosition().lng();
+          console.log('got new values for lat and long');
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('pac-input').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
       }
     </script>
+    <form class="save_button" action="/favorites" method="post">
+      <input type="hidden" name="favorite[lat]" value="<%= lat %>">
+      <input type="hidden" name="favorite[lng]" value="<%= lng %>">
+      <input type="submit" value="Save Location!">
+    </form>
+
+    <div class="display_favorites">
+      <h2>Your Favorites</h2>
+      <% for(var i = 0; i < favorites.length; i++) { %>
+        <div class="location">
+          <h3>Your latitude</h3><%= favorites[i].lat %>
+          <h3>Your longitude</h3><%= favorites[i].lng %>
+          <h3>Visit location</h3>
+
+          <form class="save_button" action="/showfavorite" method="post">
+            <input type="hidden" name="favorite[lat]" value="<%= favorites[i].lat %>">
+            <input type="hidden" name="favorite[lng]" value="<%= favorites[i].lng %>">
+            <input type="submit" value="Visit Location!">
+          </form>
+        </div>
+      <% } %>
+    </div>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi1R3t0sCpt0ImqxDLaFhw9oxBiB3PmrM&libraries=places&callback=initAutocomplete"
-         async defer></script>
+         async defer>
+    </script>
+
   </body>
 </html>
