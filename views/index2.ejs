@@ -12,17 +12,19 @@
          padding-left: 10px;
        }*/
        #map, #pano {
-         height: 500px;
-         width: 35%;
+         height: 400px;
+         width: 45%;
          float: left;
          left: 10px;
          top: 10px;
-         margin-bottom: 15px;
-         margin-left: 15px;
+         margin-bottom: 35px;
+         margin-left: 25px;
        }
 
        .save_button {
-         margin-bottom: 75px;
+         margin-bottom: 20px;
+         clear: left;
+         margin-left: 25px;
        }
 
        .location {
@@ -32,7 +34,19 @@
        }
 
        .display_favorites {
-         margin-top: 200px;
+         margin-top: 20px;
+         clear: left;
+         margin-left: 25px;
+       }
+
+       .coordinates {
+         clear: left;
+         margin-left: 25px;
+       }
+
+       .coordinates input {
+         display: block;
+         margin-top: 10px;
        }
 
       /* Optional: Makes the sample page fill the window. */
@@ -83,6 +97,7 @@
         font-size: 13px;
         font-weight: 300;
       }
+
       #target {
         width: 345px;
       }
@@ -90,20 +105,11 @@
     </style>
   </head>
   <body>
-
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
     <div id="pano"></div>
 
     <script>
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
-
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       function initAutocomplete() {
         var geocoder = new google.maps.Geocoder();
 
@@ -219,39 +225,27 @@
           title: "Drag me!",
           label: "🍳",
         });
-        // showing physical values to user inside of form
-        // const $lat = document.getElementsByClassName('lat')[0];
-        // const $lng = document.getElementsByClassName('lng')[0];
-        // $lat.value = uluru.lat;
-        // $lng.value = uluru.lng;
 
         // adding event listener for the drag release readjutment of values
         google.maps.event.addListener(marker, 'dragend', function (event) {
           // changing values inside of form
-          // $lat.value = this.getPosition().lat();
-          // $lng.value = this.getPosition().lng();
+
+          const $lat = document.getElementById('lat');
+          const $lng = document.getElementById('lng');
+
+          $lat.value = this.getPosition().lat();
+          $lng.value = this.getPosition().lng();
           console.log('got new values for lat and long');
         });
       }
-
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('pac-input').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
     </script>
-    <form class="save_button" action="/favorites" method="post">
-      <input type="hidden" name="favorite[lat]" value="<%= lat %>">
-      <input type="hidden" name="favorite[lng]" value="<%= lng %>">
+
+    <form class="coordinates save_button" action="/favorites" method="post">
+      <input id="lat">Latitude</input>
+      <input id="lng">Longitude</input>
+
+      <input type="hidden" name="favorite[lat]" value=$lat.value>
+      <input type="hidden" name="favorite[lng]" value=$lng.value>
       <input type="submit" value="Save Location!">
     </form>
 
