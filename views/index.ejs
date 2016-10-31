@@ -2,35 +2,58 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Choose Street View</title>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <title>Street View side-by-side</title>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div id="map"></div>
-    <div id="pano"></div>
-    <h1>Maps page is loading</h1>
-    <script>
-      function initialize() {
-        const fenway = {lat: 42.345573, lng: -71.098326};
+    <!--  create for loop outside instead of iteration - update i value in getElementsByClassName-->
+    <!-- retrieve code from test html file -->
 
-        const map = new google.maps.Map(document.getElementById('map'), {
-          center: fenway,
-          zoom: 16
-        });
-        const panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'), {
-              position: fenway,
-              pov: {
-                heading: 34,
-                pitch: 10
-              }
-            });
-        map.setStreetView(panorama);
-      }
-    </script>
+    <%# console.log('favorite is: ', favorites) %>
+    <%# console.log('favorites i is: ', favorites[i]) %>
+    <%# console.log('favorites i inside function is: ', favorites[i]) %>
 
-    <!-- <script type="text/javascript" src="public/javascript/map.js"></script> -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi1R3t0sCpt0ImqxDLaFhw9oxBiB3PmrM&callback=initialize">
+    <% console.log('outside loop render') %>
+
+        <h2>Your Favorites:</h2>
+          <% for (i = 0; i < favorites.length; i++) { %>
+            <div class="map">map div</div>
+            <div class="pano">pano div</div>
+            <h1>A new map</h1>
+
+            <script>
+              function initialize() {
+                var fenway = {lat: <%= favorites[i].lat %>, lng: <%= favorites[i].lng %>};
+
+  <% var maps = [] %>
+  <% console.log('maps', maps) %>
+                var map_<%= i %> = new google.maps.Map(document.getElementsByClassName('map')[<%= i %>], {
+                  center: fenway,
+                  zoom: 14
+                });
+
+    <%# console.log('map i is: ', ) %>
+                var panorama = new google.maps.StreetViewPanorama(
+                    document.getElementsByClassName('pano')[<%= i %>], {
+                      position: fenway,
+                      pov: {
+                        heading: 34,
+                        pitch: 10
+                      }
+                    });
+                map_<%= i %>.setStreetView(panorama);
+
+              };
+          </script>
+          <% } %>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi1R3t0sCpt0ImqxDLaFhw9oxBiB3PmrM&callback=initialize">
     </script>
+    <form class="" action="/favorites" method="post">
+      <input type="hidden" name="favorite[lat]" value="<%= lat %>">
+      <input type="hidden" name="favorite[lng]" value="<%= lng %>">
+      <input type="submit" value="Add">
+    </form>
   </body>
 </html>

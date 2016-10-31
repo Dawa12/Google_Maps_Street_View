@@ -3,11 +3,12 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: lightblue;
 }
 
-#map,
-#pano {
+.map,
+.pano {
  float: left;
- height: 100%;
- width: 45%;
+ height: 30%;
+ width: 30%;
 }
