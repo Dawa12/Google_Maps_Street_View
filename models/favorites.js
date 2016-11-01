@@ -80,8 +80,6 @@ function getShowFavorite(req, res, next) {
   MongoClient.connect(dbConnection, (err, db) => {
     if (err) return next(err);
 
-console.log('still working');
-
     db.collection('showfavorites')
     .find({})
     .sort({ collectionName: 1})
