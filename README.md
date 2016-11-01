@@ -14,4 +14,4 @@ Technologies used:
 * html & css
 
   
-[<img src=https://github.com/Dawa12/Google_Maps_Street_View/blob/master/public/wireframe.png>]
+<img src=https://github.com/Dawa12/Google_Maps_Street_View/blob/master/public/wireframe.png>
