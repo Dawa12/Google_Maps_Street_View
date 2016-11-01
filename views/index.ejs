@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/style.css"></link>
   </head>
   <body>
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
     <div id="pano"></div>
 
@@ -19,36 +18,26 @@
 
     <script>
       function initAutocomplete() {
-        var geocoder = new google.maps.Geocoder();
-
-        document.getElementById('pac-input').addEventListener('keyup', function(event) {
-          if (event.keyCode === 13) {
-    <%# console.log('position is now') %>
-            geocodeAddress(geocoder, map);
-          }
-        });
-
-        var fenway = {lat: <%= lat %>, lng: <%= lng %>};
+        var location = {lat: <%= lat %>, lng: <%= lng %>};
         <% if (showFavorite) { %>
           <%# console.log('true') %>
           <%# console.log('showFavorite is: ', showFavorite) %>
-          fenway = {lat: <%= showFavorite[showFavorite.length - 1].lat %>, lng: <%= showFavorite[showFavorite.length - 1].lng %>}
+          location = {lat: <%= showFavorite[showFavorite.length - 1].lat %>, lng: <%= showFavorite[showFavorite.length - 1].lng %>}
         <% } else if (!showFavorite) { %>
           <% console.log('false is rendering') %>
         <% } %>
 
         var myOptions = {
-          center: fenway,
+          center: location,
           zoom: 15,
           mapTypeId: 'roadmap'
         }
 
         var map = new google.maps.Map(document.getElementById('map'), myOptions);
-        var map2 = new google.maps.Map(document.getElementById('map2'), myOptions);
 
         var panorama = new google.maps.StreetViewPanorama(
             document.getElementById('pano'), {
-              position: fenway,
+              position: location,
               pov: {
                 heading: 34,
                 pitch: 10
@@ -56,76 +45,14 @@
             });
         map.setStreetView(panorama);
 
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
-        });
-
-        var markers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
-
-          if (places.length == 0) {
-            return;
-          }
-
-          // Clear out the old markers.
-          markers.forEach(function(marker) {
-            marker.setMap(null);
-          });
-          markers = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-    <%# console.log('place is ', place.name) %>
-    <%# console.log('place.geometry.location: ', place.geometry.location) %>
-            }));
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-        });
-
-
-        // credit to Taka for helping me place marker and detect marker position
-              // determining marker position
+        // CREDIT TO Taka for helping me place marker and detect marker position
         let marker = new google.maps.Marker({
-          position: fenway,
+          position: location,
           map: map,
           // this makes the marker a draggable item
           draggable: true,
           title: "Drag me!",
-          label: "🍳",
+          // label: ,
         });
 
         // adding event listener for the drag release readjutment of values
@@ -156,9 +83,6 @@
             </form>
 
             <!-- Allow user to delete Favorite location -->
-  <%# console.log('favorites is: ', favorites[i]) %>
-  <%# console.log('favorites id is: ', favorites[i]._id) %>
-
             <form class="delete_button" action="/favorites/<%= favorites[i]._id %>?_method=DELETE" method="post">
               <input id="location_delete" type="submit" value="Delete Location">
             </form>
