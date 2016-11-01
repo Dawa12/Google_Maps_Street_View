@@ -11,7 +11,7 @@ const dbService = require('./models/favorites');
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride('method'));
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -25,8 +25,11 @@ app.post('/favorites', dbService.saveFavorite, (req, res) => {
   res.redirect('/');
 });
 
-app.post('/showfavorite', dbService.saveShowFavorite, (req,res) => {
-  console.log('show fav post route executed');
+app.post('/showfavorite', dbService.saveShowFavorite, (req, res) => {
+  res.redirect('/');
+});
+
+app.delete('/favorites/:id', dbService.deleteFavorite, (req, res) => {
   res.redirect('/');
 });
 

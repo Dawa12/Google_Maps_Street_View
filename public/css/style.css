@@ -1,14 +1,117 @@
-html,
-body {
+/* Always set the map height explicitly to define the size of the div
+  * element that contains the map. */
+  /*body {
+  padding-left: 10px;
+}*/
+
+#map, #pano {
+  height: 400px;
+  width: 45%;
+  float: left;
+  left: 10px;
+  top: 10px;
+  margin-bottom: 35px;
+  margin-left: 25px;
+}
+
+.save_button {
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+.delete_button {
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+.favorites_parent {
+  margin-bottom: 30px;
+}
+
+.favorites_parent h2 {
+  text-align: center;
+}
+
+.display_favorites {
+  margin-top: 20px;
+  clear: left;
+  margin-left: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.location {
+  height: 250px;
+  width: 200px;
+  /*float: left;*/
+}
+
+
+.coordinates {
+  clear: left;
+  margin-left: 25px;
+}
+
+.coordinates input {
+  display: block;
+  margin-top: 10px;
+}
+
+#location_submit, #location_delete {
+  margin-top: 10px;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: lightblue;
 }
 
-.map,
-.pano {
- float: left;
- height: 30%;
- width: 30%;
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#target {
+  width: 345px;
 }
