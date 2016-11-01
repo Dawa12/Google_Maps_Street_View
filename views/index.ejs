@@ -4,120 +4,6 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Places Searchbox</title>
-<<<<<<< HEAD
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-
-       /*body {
-         padding-left: 10px;
-       }*/
-       #map, #pano {
-         height: 400px;
-         width: 45%;
-         float: left;
-         left: 10px;
-         top: 10px;
-         margin-bottom: 35px;
-         margin-left: 25px;
-       }
-
-       .save_button {
-         margin-bottom: 20px;
-         clear: left;
-         margin-left: 25px;
-       }
-
-       .location {
-         height: 200px;
-         width: 200px;
-         float: left;
-       }
-
-       .display_favorites {
-         margin-top: 20px;
-         clear: left;
-         margin-left: 25px;
-       }
-
-       .save_button {
-         float: left;
-         height: 100px;
-         width: 300px;
-         margin-bottom: 90px;
-       }
-
-       .coordinates {
-         clear: left;
-         margin-left: 25px;
-       }
-
-       .coordinates input {
-         display: block;
-         margin-top: 10px;
-       }
-
-       #location_submit {
-         margin-top: 10px;
-       }
-
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .controls {
-        margin-top: 10px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 300px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      .pac-container {
-        font-family: Roboto;
-      }
-
-      #type-selector {
-        color: #fff;
-        background-color: #4d90fe;
-        padding: 5px 11px 0px 11px;
-      }
-
-      #type-selector label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-      #target {
-        width: 345px;
-      }
-
-    </style>
-=======
-    <link rel="stylesheet" href="/css/style.css"></link>
->>>>>>> 1dev
   </head>
   <body>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -160,17 +46,6 @@
         var map = new google.maps.Map(document.getElementById('map'), myOptions);
         // var map2 = new google.maps.Map(document.getElementById('map2'), myOptions);
 
-<<<<<<< HEAD
-        var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'), {
-              position: fenway,
-              pov: {
-                heading: 34,
-                pitch: 10
-              }
-            });
-        map.setStreetView(panorama);
-=======
         // var panorama = new google.maps.StreetViewPanorama(
         //     document.getElementById('pano'), {
         //       position: fenway,
@@ -180,7 +55,6 @@
         //       }
         //     });
         // map.setStreetView(panorama);
->>>>>>> 1dev
 
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
