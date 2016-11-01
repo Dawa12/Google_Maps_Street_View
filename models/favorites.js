@@ -8,7 +8,7 @@ function getFavorite(req, res, next) {
     if (err) return next(err);
 
     db.collection('favorites')
-    .find({})
+    .find({ userId: { $eq: req.session.userId } })
     .sort({ collectionName: 1})
     .toArray((arrayError, data) => {
       if (arrayError) return next(arrayError);
@@ -22,13 +22,22 @@ function getFavorite(req, res, next) {
 }
 
 function saveFavorite(req, res, next) {
+  // creating an empty object for the insertObj
+  const insertObj = {};
+
+  // copying all of req.body into insertObj
+  for(key in req.body) {
+    insertObj[key] = req.body[key];
+  }
+
+  // Adding userId to insertObj
+  insertObj.favorite.userId = req.session.userId;
+
   MongoClient.connect(dbConnection, (err, db) => {
     if (err) return next(err);
 
-// console.log('showing req.body', req.body);
-
     db.collection('favorites')
-      .insert(req.body.favorite, (insertErr, result) => {
+      .insert(insertObj.favorite, (insertErr, result) => {
         if (insertErr) return next(insertErr);
 
         res.saved = result;
@@ -40,7 +49,6 @@ function saveFavorite(req, res, next) {
   });
   return false;
 }
-
 
 function deleteFavorite(req, res, next) {
   MongoClient.connect(dbConnection, (err, db) => {
@@ -61,11 +69,21 @@ function deleteFavorite(req, res, next) {
 
 
 function saveShowFavorite(req, res, next) {
+  const insertObj = {};
+
+  // copying all of req.body into insertObj
+  for(key in req.body) {
+    insertObj[key] = req.body[key];
+  }
+
+  // Adding userId to insertObj
+  insertObj.favorite.userId = req.session.userId;
+
   MongoClient.connect(dbConnection, (err, db) => {
     if (err) return next(err);
 
     db.collection('showfavorites')
-      .insert(req.body.favorite, (insertErr, result) => {
+      .insert(insertObj.favorite, (insertErr, result) => {
         if (insertErr) return next(insertErr);
           res.saved = result;
           db.close();
