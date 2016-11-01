@@ -109,13 +109,20 @@
     <div id="map"></div>
     <div id="pano"></div>
 
+    <form class="coordinates save_button" action="/favorites" method="post">
+      <input id="lat" name="favorite[lat]">Latitude</input>
+      <input id="lng" name="favorite[lng]">Longitude</input>
+
+      <input type="submit" value="Save Location!">
+    </form>
+
     <script>
       function initAutocomplete() {
         var geocoder = new google.maps.Geocoder();
 
         document.getElementById('pac-input').addEventListener('keyup', function(event) {
           if (event.keyCode === 13) {
-  <%# console.log('position is now') %>
+    <%# console.log('position is now') %>
             geocodeAddress(geocoder, map);
           }
         });
@@ -200,8 +207,8 @@
               icon: icon,
               title: place.name,
               position: place.geometry.location
-<%# console.log('place is ', place.name) %>
-<%# console.log('place.geometry.location: ', place.geometry.location) %>
+    <%# console.log('place is ', place.name) %>
+    <%# console.log('place.geometry.location: ', place.geometry.location) %>
             }));
 
             if (place.geometry.viewport) {
@@ -239,16 +246,6 @@
         });
       }
     </script>
-
-    <form class="coordinates save_button" action="/favorites" method="post">
-      <input id="lat">Latitude</input>
-      <input id="lng">Longitude</input>
-
-      <input type="hidden" name="favorite[lat]" value=$lat.value>
-      <input type="hidden" name="favorite[lng]" value=$lng.value>
-      <input type="submit" value="Save Location!">
-    </form>
-
     <div class="display_favorites">
       <h2>Your Favorites</h2>
       <% for(var i = 0; i < favorites.length; i++) { %>
