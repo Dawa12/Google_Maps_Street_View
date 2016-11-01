@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const { ObjectID } = require('mongodb');
 
-const dbConnection = 'mongodb://localhost:27017/maps';
+const dbConnection = process.env.MONGODB_URI || 'mongodb://localhost:27017/maps';
 
 function getFavorite(req, res, next) {
   MongoClient.connect(dbConnection, (err, db) => {

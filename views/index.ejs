@@ -14,7 +14,6 @@
     <form class="coordinates save_button" action="/favorites" method="post">
       <input id="lat" name="favorite[lat]">Latitude</input>
       <input id="lng" name="favorite[lng]">Longitude</input>
-
       <input type="submit" value="Save Location!">
     </form>
 
@@ -31,8 +30,8 @@
 
         var fenway = {lat: <%= lat %>, lng: <%= lng %>};
         <% if (showFavorite) { %>
-          <% console.log('true') %>
-          <% console.log('showFavorite is: ', showFavorite) %>
+          <%# console.log('true') %>
+          <%# console.log('showFavorite is: ', showFavorite) %>
           fenway = {lat: <%= showFavorite[showFavorite.length - 1].lat %>, lng: <%= showFavorite[showFavorite.length - 1].lng %>}
         <% } else if (!showFavorite) { %>
           <% console.log('false is rendering') %>

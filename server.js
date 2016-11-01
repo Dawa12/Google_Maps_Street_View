@@ -17,19 +17,14 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const mapRoute = require('./routes/map');
+const favoritesRoute = require('./routes/favorites');
 
-// app.use('/', dbService.getFavorite, mapRoute);
-app.use('/', dbService.getFavorite, dbService.getShowFavorite, mapRoute);
+app.use('/', mapRoute);
+// app.use('/', dbService.getFavorite, dbService.getShowFavorite, mapRoute);
 
-app.post('/favorites', dbService.saveFavorite, (req, res) => {
-  res.redirect('/');
-});
+app.use('/favorites', favoritesRoute);
 
 app.post('/showfavorite', dbService.saveShowFavorite, (req, res) => {
-  res.redirect('/');
-});
-
-app.delete('/favorites/:id', dbService.deleteFavorite, (req, res) => {
   res.redirect('/');
 });
 
