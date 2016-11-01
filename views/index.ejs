@@ -44,17 +44,17 @@
         }
 
         var map = new google.maps.Map(document.getElementById('map'), myOptions);
-        // var map2 = new google.maps.Map(document.getElementById('map2'), myOptions);
+        var map2 = new google.maps.Map(document.getElementById('map2'), myOptions);
 
-        // var panorama = new google.maps.StreetViewPanorama(
-        //     document.getElementById('pano'), {
-        //       position: fenway,
-        //       pov: {
-        //         heading: 34,
-        //         pitch: 10
-        //       }
-        //     });
-        // map.setStreetView(panorama);
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('pano'), {
+              position: fenway,
+              pov: {
+                heading: 34,
+                pitch: 10
+              }
+            });
+        map.setStreetView(panorama);
 
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
