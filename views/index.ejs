@@ -32,7 +32,7 @@
         <% if (showFavorite) { %>
           <%# console.log('true') %>
           <%# console.log('showFavorite is: ', showFavorite) %>
-
+          fenway = {lat: <%= showFavorite[showFavorite.length - 1].lat %>, lng: <%= showFavorite[showFavorite.length - 1].lng %>}
         <% } else if (!showFavorite) { %>
           <% console.log('false is rendering') %>
         <% } %>
