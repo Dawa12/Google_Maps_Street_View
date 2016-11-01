@@ -39,6 +39,13 @@
          margin-left: 25px;
        }
 
+       .save_button {
+         float: left;
+         height: 100px;
+         width: 300px;
+         margin-bottom: 90px;
+       }
+
        .coordinates {
          clear: left;
          margin-left: 25px;
@@ -46,6 +53,10 @@
 
        .coordinates input {
          display: block;
+         margin-top: 10px;
+       }
+
+       #location_submit {
          margin-top: 10px;
        }
 
@@ -130,16 +141,11 @@
         var fenway = {lat: <%= lat %>, lng: <%= lng %>};
         <% if (showFavorite) { %>
           <% console.log('true') %>
-          <%# console.log('showFavorite is: ', showFavorite) %>
-
-          fenway = {lat: <%= showFavorite[0].lat %>, lng: <%= showFavorite[0].lng %>}
-
-        <% } else { %>
-          <% console.log('false') %>
+          <% console.log('showFavorite is: ', showFavorite) %>
+          fenway = {lat: <%= showFavorite[showFavorite.length - 1].lat %>, lng: <%= showFavorite[showFavorite.length - 1].lng %>}
+        <% } else if (!showFavorite) { %>
+          <% console.log('false is rendering') %>
         <% } %>
-
-        <%# console.log('hi') %>
-        <%# console.log('showfav is', showFavorite) %>
 
         var myOptions = {
           center: fenway,
@@ -252,12 +258,11 @@
         <div class="location">
           <h3>Your latitude</h3><%= favorites[i].lat %>
           <h3>Your longitude</h3><%= favorites[i].lng %>
-          <h3>Visit location</h3>
 
           <form class="save_button" action="/showfavorite" method="post">
             <input type="hidden" name="favorite[lat]" value="<%= favorites[i].lat %>">
             <input type="hidden" name="favorite[lng]" value="<%= favorites[i].lng %>">
-            <input type="submit" value="Visit Location!">
+            <input id="location_submit" type="submit" value="Visit Location!">
           </form>
         </div>
       <% } %>
@@ -266,6 +271,5 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi1R3t0sCpt0ImqxDLaFhw9oxBiB3PmrM&libraries=places&callback=initAutocomplete"
          async defer>
     </script>
-
   </body>
 </html>
