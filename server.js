@@ -6,6 +6,9 @@ const PORT = process.env.PORT || 3000;
 const methodOverride = require('method-override');
 const path = require('path');
 const bodyParser = require('body-parser');
+const dotEnv          = require('dotenv').config({silent: true});
+const session         = require('express-session');
+const cookieParser    = require('cookie-parser');
 
 const dbService = require('./models/favorites');
 
@@ -18,14 +21,10 @@ app.set('views', 'views');
 
 const mapRoute = require('./routes/map');
 const favoritesRoute = require('./routes/favorites');
+const showfavoriteRoute = require('./routes/showfavorite')
 
 app.use('/', mapRoute);
-// app.use('/', dbService.getFavorite, dbService.getShowFavorite, mapRoute);
-
 app.use('/favorites', favoritesRoute);
-
-app.post('/showfavorite', dbService.saveShowFavorite, (req, res) => {
-  res.redirect('/');
-});
+app.use('/showfavorite', showfavoriteRoute);
 
 app.listen(PORT, () => console.log('listening on port', PORT));
