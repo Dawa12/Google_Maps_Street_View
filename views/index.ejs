@@ -4,6 +4,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Places Searchbox</title>
+<<<<<<< HEAD
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -114,6 +115,9 @@
       }
 
     </style>
+=======
+    <link rel="stylesheet" href="/css/style.css"></link>
+>>>>>>> 1dev
   </head>
   <body>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -156,6 +160,7 @@
         var map = new google.maps.Map(document.getElementById('map'), myOptions);
         // var map2 = new google.maps.Map(document.getElementById('map2'), myOptions);
 
+<<<<<<< HEAD
         var panorama = new google.maps.StreetViewPanorama(
             document.getElementById('pano'), {
               position: fenway,
@@ -165,6 +170,17 @@
               }
             });
         map.setStreetView(panorama);
+=======
+        // var panorama = new google.maps.StreetViewPanorama(
+        //     document.getElementById('pano'), {
+        //       position: fenway,
+        //       pov: {
+        //         heading: 34,
+        //         pitch: 10
+        //       }
+        //     });
+        // map.setStreetView(panorama);
+>>>>>>> 1dev
 
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
@@ -191,6 +207,7 @@
             marker.setMap(null);
           });
           markers = [];
+<<<<<<< HEAD
 
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
@@ -239,6 +256,56 @@
           label: "🍳",
         });
 
+=======
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+    <%# console.log('place is ', place.name) %>
+    <%# console.log('place.geometry.location: ', place.geometry.location) %>
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+
+
+        // credit to Taka for helping me place marker and detect marker position
+              // determining marker position
+        let marker = new google.maps.Marker({
+          position: fenway,
+          map: map,
+          // this makes the marker a draggable item
+          draggable: true,
+          title: "Drag me!",
+          label: "🍳",
+        });
+
+>>>>>>> 1dev
         // adding event listener for the drag release readjutment of values
         google.maps.event.addListener(marker, 'dragend', function (event) {
           // changing values inside of form
@@ -252,6 +319,7 @@
         });
       }
     </script>
+<<<<<<< HEAD
     <div class="display_favorites">
       <h2>Your Favorites</h2>
       <% for(var i = 0; i < favorites.length; i++) { %>
@@ -266,6 +334,32 @@
           </form>
         </div>
       <% } %>
+=======
+    <div class="favorites_parent">
+      <h2>Your Favorites</h2>
+      <div class="display_favorites">
+        <% for(var i = 0; i < favorites.length; i++) { %>
+          <div class="location">
+            <h3>Your latitude</h3><%= favorites[i].lat %>
+            <h3>Your longitude</h3><%= favorites[i].lng %>
+
+            <form class="save_button" action="/showfavorite" method="post">
+              <input type="hidden" name="favorite[lat]" value="<%= favorites[i].lat %>">
+              <input type="hidden" name="favorite[lng]" value="<%= favorites[i].lng %>">
+              <input id="location_submit" type="submit" value="Visit Location!">
+            </form>
+
+            <!-- Allow user to delete Favorite location -->
+  <%# console.log('favorites is: ', favorites[i]) %>
+  <%# console.log('favorites id is: ', favorites[i]._id) %>
+
+            <form class="delete_button" action="/favorites/<%= favorites[i]._id %>?_method=DELETE" method="post">
+              <input id="location_delete" type="submit" value="Delete Location">
+            </form>
+          </div>
+        <% } %>
+      </div>
+>>>>>>> 1dev
     </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi1R3t0sCpt0ImqxDLaFhw9oxBiB3PmrM&libraries=places&callback=initAutocomplete"

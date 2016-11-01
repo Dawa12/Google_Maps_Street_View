@@ -96,11 +96,10 @@ console.log('still working');
   return false;
 }
 
-
 module.exports = {
   getFavorite,
   saveFavorite,
-  // deleteFavorite,
+  deleteFavorite,
   saveShowFavorite,
   getShowFavorite,
 };
