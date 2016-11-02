@@ -15,3 +15,6 @@ Technologies used:
 
   
 <img src=https://github.com/Dawa12/Google_Maps_Street_View/blob/master/public/wireframe.png>
+
+Register for an account and login to save your favorite places in the city:
+https://nyc-track-map.herokuapp.com/
