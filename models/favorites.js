@@ -55,8 +55,8 @@ function deleteFavorite(req, res, next) {
     if (err) return next(err);
 
     db.collection('favorites')
-      .findAndRemove({ _id: ObjectID(req.params.id)}, (removeErr, doc) => {
-        if(removeErr) return next(removeErr);
+      .findAndRemove({ _id: ObjectID(req.params.id) }, (removeErr, doc) => {
+        if (removeErr) return next(removeErr);
 
         res.removed = doc;
         db.close();
@@ -72,7 +72,7 @@ function saveShowFavorite(req, res, next) {
   const insertObj = {};
 
   // copying all of req.body into insertObj
-  for(key in req.body) {
+  for (key in req.body) {
     insertObj[key] = req.body[key];
   }
 
